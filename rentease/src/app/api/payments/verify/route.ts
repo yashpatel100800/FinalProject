@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { authOptions } from '@/lib/auth'
 import { stripe } from '@/lib/stripe'
 import { connectDB } from '@/lib/db'
 import RentalModel from '@/models/Rental'
