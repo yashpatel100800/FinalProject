@@ -1,0 +1,19 @@
+'use client'
+
+import { SessionProvider } from 'next-auth/react'
+import { ReactNode } from 'react'
+import { SocketProvider } from '@/contexts/SocketContext'
+
+interface ProvidersProps {
+  children: ReactNode
+}
+
+export default function Providers({ children }: ProvidersProps) {
+  return (
+    <SessionProvider>
+      <SocketProvider>
+        {children}
+      </SocketProvider>
+    </SessionProvider>
+  )
+}
