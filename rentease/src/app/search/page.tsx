@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Layout from '@/components/layout/Layout'
 import { Button } from '@/components/ui/button'
@@ -69,7 +69,7 @@ const SORT_OPTIONS = [
   { value: 'totalRatings', label: 'Most Reviewed' }
 ]
 
-export default function SearchPage() {
+function SearchContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [items, setItems] = useState<Item[]>([])
@@ -653,5 +653,21 @@ export default function SearchPage() {
         </div>
       </div>
     </Layout>
+  )
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={
+      <Layout>
+        <div className="min-h-screen bg-gray-50 py-8">
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="text-center">Loading...</div>
+          </div>
+        </div>
+      </Layout>
+    }>
+      <SearchContent />
+    </Suspense>
   )
 }

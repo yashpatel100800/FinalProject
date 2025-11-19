@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, Suspense } from 'react'
 import { useSession } from 'next-auth/react'
 import { useSocket } from '@/contexts/SocketContext'
 import { useSearchParams } from 'next/navigation'
@@ -54,7 +54,7 @@ interface Conversation {
   updatedAt: string
 }
 
-export default function MessagesPage() {
+function MessagesContent() {
   const { data: session } = useSession()
   const { socket, isConnected } = useSocket()
   const searchParams = useSearchParams()
@@ -519,4 +519,20 @@ export default function MessagesPage() {
       </div>
       </Layout>
     )
+}
+
+export default function MessagesPage() {
+  return (
+    <Suspense fallback={
+      <Layout>
+        <div className="min-h-screen bg-gray-50 py-8">
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="text-center">Loading messages...</div>
+          </div>
+        </div>
+      </Layout>
+    }>
+      <MessagesContent />
+    </Suspense>
+  )
 }
